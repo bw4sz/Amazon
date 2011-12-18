@@ -1,0 +1,20 @@
+require(sp)
+require(raster)
+require(maptools)
+#Where are the natureserve range maps?
+setwd("C:/Users/Ben/Documents/GIS/Trochilidae/")
+#List all the shapefiles, recursively
+ranges.files<-list.files(pattern="pl.shp")
+#How Many Species?
+length(ranges.files)
+
+
+ranges.poly<-lapply(ranges.files,function(x) readShapePoly(x,delete_null_obj=TRUE))
+#Create one test Range
+a<-ranges.poly[[1]]
+ranges.extent<-lapply(ranges.poly, extent)
+
+#Draw the extents
+data(wrld_simpl)
+plot(wrld_simpl, xlim=c(-133,-31), ylim=c(-30,60))
+lapply(ranges.poly, function(x) plot(x, add=TRUE))

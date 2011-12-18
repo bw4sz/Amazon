@@ -1,0 +1,24 @@
+data<-read.csv("C:/Users/Ben/Documents/Stony Brook/1st Year/cait.csv")
+colnames(data)<-sub("X","",colnames(data))
+
+
+a<-melt(data, id.vars="Species", measure.vars=13:14, time.vars=2:12)
+
+feeders<-(subset(data,data$Site=="Feeder"))
+flowers<-subset(data,data$Site=="Flower")
+
+plot(y=data[1,2:12],x=time, type='l', ylim=c(0,3),ylab="Abundance", col=data$Aggression)
+apply(data[,2:12],1,function(b) lines(y=data[b,2:12], x=time))
+# Aggregate Graphs
+k<-aggregate(feeders[2:12],by=list(feeders$Aggression), function(x) mean(x,na.rm=TRUE))
+l<-k[-1,]
+plot(y=l[1,2:12],x=time, type='b', ylim=c(0,1.5),ylab="Abundance", col='red')
+lines(l[2,2:12], x=time, col='green', type='b')
+lines(l[3,2:12], x=time, col='blue', type='b')
+
+
+relative proportion
+
+feeders[15,2:12]<-apply(feeders[2:12],2,sum)
+
+#Sparkling Violetear v Booted Rackettail
