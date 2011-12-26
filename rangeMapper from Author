@@ -1,0 +1,39 @@
+  require(rangeMapper)
+ dbcon = rangeMap.start(file = "wrens.sqlite", dir = tempdir() , overwrite = TRUE)
+# Download range vector files
+ wd = setwd("C:/Users/Ben/Documents/Stony Brook/1st Year/R/")
+
+ download.file("http://www.natureserve.org/getData/dataSets/birdMapData/Trochilidae.zip", "Trochilidae.zip")
+ unzip("Trochilidae.zip")
+# Combine all ranges in one "SpatialPolygonsDataFrame"
+   R = list() # a container for all ranges
+  lst = selectShpFiles("Trochilidae")
+  for(i in 1:nrow(lst)) {
+                  ri = readOGR(lst$dsn[i], lst$layer[i], verbose = FALSE)
+                  ri = spChFIDs(ri,  paste(i, 1:length(ri), sep = "." ) )
+                  print(i)
+                 R[[i]] = ri
+  }
+ R = do.call(rbind, R)
+ # see http://www.natureserve.org/getData/Metadata_Birds_ver_3.0_Oct_07.pdf
+ proj4string(R) = CRS("+proj=longlat +datum=NAD83")
+ setwd(wd)
+ plot(R, border = "grey", axes = TRUE)
+global.bbox.save(con = dbcon, bbox = R)
+ gridSize.save(dbcon)
+ canvas.save(dbcon)
+ processRanges(spdf = R, con =  dbcon, ID = "SCI_NAME")
+ rangeMap.save(dbcon)
+ sr = rangeMap.fetch(dbcon)
+ plot(sr)
+data(wrld_simpl)
+hummrich<-raster(sr)
+projWorld<-spTransform(wrld_simpl,CRS ="+proj=longlat +datum=NAD83 +ellps=GRS80 +towgs84=0,0,0")
+projection(wrld_simpl)<-projection(hummrich)
+plot(hummrich, col=heat.colors(10), main="Hummingbird Species Richness", xaxt="n", yaxt="n")
+plot(wrld_simpl, add=TRUE)
+#Save to File
+jpeg("Hummingbird Richness.jpeg", res=200, width=1000,height=1000)
+plot(hummrich, col=heat.colors(10), main="Hummingbird Species Richness", xaxt="n", yaxt="n")
+plot(wrld_simpl, add=TRUE)
+dev.off()
