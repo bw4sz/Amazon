@@ -9,7 +9,7 @@ a[37,]
 
 2.	Are species with smaller ranges more susceptible to range loss (Hint: correlation)? (2 points)
 cor(d$Rangesize,d$RangeChange)
-#0.06439793
+?#0.06439793
 
 3. How many species of montane hummingbird are there (Hint: Hummingbird: Trochilidae) (1 point if you look it up, 2 if you can fully code it)
 f<-table(d$Family)

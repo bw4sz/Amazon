@@ -2,7 +2,7 @@
 #This study looked at potential elevation range shifts of species tracking their current thermal niche. 
 #Change the filepath to where ever you downloaded it. Tip, you can just drag and drop into the R window, and then change the function.
 d<-read.csv("C:/Users/Ben/Documents/R/Jetz.csv", sep=",", header=TRUE)
-#What does the entire file look like?
+d#What does the entire file look like?
 d
 #That's annoying, i just want to see the structure of it
 head(d)
