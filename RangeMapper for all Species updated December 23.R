@@ -160,8 +160,8 @@ boxplot(value~factor(L1),data=bioclim)
 bioclim.tukey<-sapply(unique(bioclim$L1),function(x) boxplot(value~factor(L1),data=bioclim,subset=bioclim$L1=="x"))}
 
 
-#Lights Stat
-light.box<-PolyRasBox(km50,km150,Lowland,r)
+#Lights Stat updated
+light.box<-PolyRasBox(km50,km150,Lowland,lights.mask)
 light.mean<-tapply(light.box$value,factor(light.box$L1),function(x) mean(x,na.rm=TRUE))
 a<-aov(value ~ factor(L1), data=light.box)
 light.stat<-TukeyHSD(a)
