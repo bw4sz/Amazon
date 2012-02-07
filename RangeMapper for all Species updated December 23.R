@@ -1,6 +1,7 @@
 #Amazon Borders, Do the amazon borderlands harbor increased cultural and biodiversity?
 #In Colloboration with David Salisbury 12/26/11
 # Submitted Human Ecology and Land Use Policy
+#resubmitted 2/1/2012
 
 
 #Create avian richness rasters for the Western Hemisphere, built from Natureserve range maps. Utilizing the package, rangeMapper.
